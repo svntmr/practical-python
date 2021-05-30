@@ -20,8 +20,8 @@ while principal > 0:
 
     if principal < 0:  # fix to not show negative principal
         principal = 0.0
-    print(months, monthly_payment, principal)
+    print(f'{months} month, {monthly_payment} monthly_payment, {round(principal, 2)} principal')
 
-print('Total paid', round(total_paid, 2))
-print('Months', months)
+print(f'Total paid {round(total_paid, 2)}')
+print(f'Months {months}')
 
