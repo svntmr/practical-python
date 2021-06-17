@@ -38,18 +38,24 @@ def read_prices(filename):
     return stocks
 
 
-portfolio = read_portfolio('Data/portfolio.csv')
-prices = read_prices('Data/prices.csv')
+def make_report(shares: list, share_prices: dict):
+    """Saves info about shares into list of tuples"""
+    report = []
+    for share in shares:
+        report.append((share['name'], share['shares'], current := share_prices.get(share['name'], 0),
+                       current - share['price']))
+    return report
 
-# Calculate current cost of portfolio
-current_price = 0.0
-for share in portfolio:
-    current_price += share['shares'] * share['price']
 
-# Calculate portfolio value
-current_value = 0.0
-for share in portfolio:
-    current_value += share['shares'] * prices.get(share['name'], 0)
-
-print('Current value', current_value)
-print('Gain', current_value - current_price)
+if __name__ == '__main__':
+    portfolio = read_portfolio('Data/portfolio.csv')
+    prices = read_prices('Data/prices.csv')
+    report = make_report(portfolio, prices)
+    headers = ('Name', 'Shares', 'Price', 'Change')
+    base_separation = '-' * 10
+    separator = (base_separation,) * len(headers)
+    print('{:>10s} {:>10s} {:>10s} {:>10s}'.format(*headers))
+    print('{:>10s} {:>10s} {:>10s} {:>10s}'.format(*separator))
+    for name, shares, price, change in report:
+        price = '${:.2f}'.format(price)  # Pre-format to add dollar sign
+        print(f'{name:>10s} {shares:>10d} {price:>10} {change:>10.2f}')
