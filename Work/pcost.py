@@ -12,12 +12,12 @@ def portfolio_cost(filename):
     with open(filename, 'rt') as file:
         portfolio = csv.reader(file)
         next(portfolio)  # Skip headings
-        for line in portfolio:
+        for row, line in enumerate(portfolio):
             try:
                 share_amount, share_price = line[1:]
                 total_cost += float(share_amount) * float(share_price)
             except ValueError:
-                print('Bad file format, this line will be skipped')
+                print(f'Row {row}: Bad line: {line}')
     return total_cost
 
 
