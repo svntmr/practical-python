@@ -10,16 +10,17 @@ def read_portfolio(filename):
 
     with open(filename, 'rt') as file:
         portfolio = csv.reader(file)
-        next(portfolio)  # Skip headings
-        for line in portfolio:
+        headers = next(portfolio)
+        for row, line in enumerate(portfolio):
+            record = dict(zip(headers, line))
             try:
                 portfolio_shares.append({
-                    'name': line[0],
-                    'shares': int(line[1]),
-                    'price': float(line[2])
+                    'name': record['name'],
+                    'shares': int(record['shares']),
+                    'price': float(record['price'])
                 })
             except ValueError:
-                print('Bad file format, this line will be skipped')
+                print(f'Row {row}: Bad line: {line}')
     return portfolio_shares
 
 
@@ -30,11 +31,11 @@ def read_prices(filename):
     with open(filename, 'rt') as file:
         prices = csv.reader(file)
         next(prices)  # Skip headings
-        for line in prices:
+        for row, line in enumerate(prices):
             try:
                 stocks[str(line[0])] = float(line[1])
-            except (ValueError, IndexError):
-                print('Bad file format, this line will be skipped')
+            except IndexError:
+                pass
     return stocks
 
 
