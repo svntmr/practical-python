@@ -48,10 +48,8 @@ def make_report(shares: list, share_prices: dict):
     return report
 
 
-if __name__ == '__main__':
-    portfolio = read_portfolio('Data/portfolio.csv')
-    prices = read_prices('Data/prices.csv')
-    report = make_report(portfolio, prices)
+def print_report(report):
+    """Prints the report with nice formatting"""
     headers = ('Name', 'Shares', 'Price', 'Change')
     base_separation = '-' * 10
     separator = (base_separation,) * len(headers)
@@ -60,3 +58,15 @@ if __name__ == '__main__':
     for name, shares, price, change in report:
         price = '${:.2f}'.format(price)  # Pre-format to add dollar sign
         print(f'{name:>10s} {shares:>10d} {price:>10} {change:>10.2f}')
+
+
+def portfolio_report(portfolio_file: str = 'Data/portfolio.csv', prices_file: str = 'Data/prices.csv'):
+    """Collects data about given portfolio and prices, makes small report"""
+    portfolio = read_portfolio(portfolio_file)
+    prices = read_prices(prices_file)
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+
+if __name__ == '__main__':
+    portfolio_report()
