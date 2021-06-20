@@ -1,42 +1,17 @@
 # report.py
 #
 # Exercise 2.4
-import csv
+from fileparse import parse_csv
 
 
-def read_portfolio(filename):
+def read_portfolio(filename: str) -> list:
     """Reads portfolio into list of dictionaries"""
-    portfolio_shares = []  # Initial portfolio state
-
-    with open(filename, 'rt') as file:
-        portfolio = csv.reader(file)
-        headers = next(portfolio)
-        for row, line in enumerate(portfolio):
-            record = dict(zip(headers, line))
-            try:
-                portfolio_shares.append({
-                    'name': record['name'],
-                    'shares': int(record['shares']),
-                    'price': float(record['price'])
-                })
-            except ValueError:
-                print(f'Row {row}: Bad line: {line}')
-    return portfolio_shares
+    return parse_csv(filename, types=[str, int, float])
 
 
-def read_prices(filename):
+def read_prices(filename: str) -> dict:
     """Reads stock prices from file"""
-    stocks = {}  # Initial stocks state
-
-    with open(filename, 'rt') as file:
-        prices = csv.reader(file)
-        next(prices)  # Skip headings
-        for row, line in enumerate(prices):
-            try:
-                stocks[str(line[0])] = float(line[1])
-            except IndexError:
-                pass
-    return stocks
+    return dict(parse_csv(filename, types=[str, float], has_headers=False))
 
 
 def make_report(shares: list, share_prices: dict):
