@@ -1,25 +1,22 @@
 # pcost.py
 #
 # Exercise 1.27
-import csv
+from report import read_portfolio
 import sys
 
 
-def portfolio_cost(filename):
+def portfolio_cost(filename: str) -> float:
     """Calculates the total cost of portfolio"""
     total_cost = 0.0  # Total portfolio cost in dollars
 
-    with open(filename, 'rt') as file:
-        portfolio = csv.reader(file)
-        headers = next(portfolio)
-        for row, line in enumerate(portfolio):
-            record = dict(zip(headers, line))
-            try:
-                nshares = int(record['shares'])
-                price = float(record['price'])
-                total_cost += nshares * price
-            except ValueError:
-                print(f'Row {row}: Bad line: {line}')
+    portfolio = read_portfolio(filename)
+    for line, row in enumerate(portfolio):
+        try:
+            nshares = row.get('shares', 0)
+            price = row.get('price', 0)
+            total_cost += nshares * price
+        except ValueError:
+            print(f'Row {line}: Bad line: {row}')
     return total_cost
 
 
