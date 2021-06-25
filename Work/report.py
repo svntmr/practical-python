@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # report.py
 #
 # Exercise 2.4
@@ -43,5 +44,12 @@ def portfolio_report(portfolio_file: str = 'Data/portfolio.csv', prices_file: st
     print_report(report)
 
 
+def main(argv: list):
+    portfolio_file = argv[1]
+    prices_file = argv[2]
+    portfolio_report(portfolio_file=portfolio_file, prices_file=prices_file)
+
+
 if __name__ == '__main__':
-    portfolio_report()
+    import sys
+    main(sys.argv)
