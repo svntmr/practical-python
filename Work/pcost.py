@@ -10,13 +10,11 @@ def portfolio_cost(filename: str) -> float:
     total_cost = 0.0  # Total portfolio cost in dollars
 
     portfolio = read_portfolio(filename)
-    for line, row in enumerate(portfolio):
+    for line, stock in enumerate(portfolio):
         try:
-            nshares = row.get('shares', 0)
-            price = row.get('price', 0)
-            total_cost += nshares * price
+            total_cost += stock.cost()
         except ValueError:
-            print(f'Row {line}: Bad line: {row}')
+            print(f'Row {line}: Bad line: {stock}')
     return total_cost
 
 

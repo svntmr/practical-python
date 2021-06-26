@@ -2,13 +2,17 @@
 # report.py
 #
 # Exercise 2.4
+from stock import Stock
 from fileparse import parse_csv
 
 
 def read_portfolio(filename: str) -> list:
     """Reads portfolio into list of dictionaries"""
     with open(filename, 'r') as portfolio_lines:
-        return parse_csv(portfolio_lines, types=[str, int, float])
+        return [
+            Stock(stock['name'], stock['shares'], stock['price'])
+            for stock in parse_csv(portfolio_lines, types=[str, int, float])
+        ]
 
 
 def read_prices(filename: str) -> dict:
@@ -21,8 +25,8 @@ def make_report(shares: list, share_prices: dict):
     """Saves info about shares into list of tuples"""
     report = []
     for share in shares:
-        report.append((share['name'], share['shares'], current := share_prices.get(share['name'], 0),
-                       current - share['price']))
+        report.append((share.name, share.shares, current := share_prices.get(share.name, 0),
+                       current - share.price))
     return report
 
 
