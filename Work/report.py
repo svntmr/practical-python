@@ -2,8 +2,9 @@
 # report.py
 #
 # Exercise 2.4
-from stock import Stock
 from fileparse import parse_csv
+from stock import Stock
+from tableformat import create_formatter, TableFormatter
 
 
 def read_portfolio(filename: str) -> list:
@@ -30,33 +31,34 @@ def make_report(shares: list, share_prices: dict):
     return report
 
 
-def print_report(report):
+def print_report(report, tableformatter: TableFormatter):
     """Prints the report with nice formatting"""
-    headers = ('Name', 'Shares', 'Price', 'Change')
-    base_separation = '-' * 10
-    separator = (base_separation,) * len(headers)
-    print('{:>10s} {:>10s} {:>10s} {:>10s}'.format(*headers))
-    print('{:>10s} {:>10s} {:>10s} {:>10s}'.format(*separator))
+    tableformatter.headings(['Name', 'Shares', 'Price', 'Change'])
     for name, shares, price, change in report:
         price = '${:.2f}'.format(price)  # Pre-format to add dollar sign
-        print(f'{name:>10s} {shares:>10d} {price:>10} {change:>10.2f}')
+        data = [name, str(shares), f'{price}', f'{change:0.2f}']
+        tableformatter.row(data)
 
 
-def portfolio_report(portfolio_file: str = 'Data/portfolio.csv', prices_file: str = 'Data/prices.csv'):
+def portfolio_report(portfolio_file: str = 'Data/portfolio.csv', prices_file: str = 'Data/prices.csv',
+                     formatter: str = 'txt'):
     """Collects data about given portfolio and prices, makes small report"""
     portfolio = read_portfolio(portfolio_file)
     with open(prices_file, 'r') as report_lines:
         prices = read_prices(prices_file)
     report = make_report(portfolio, prices)
-    print_report(report)
+    tableformatter = create_formatter(formatter)
+    print_report(report, tableformatter)
 
 
 def main(argv: list):
     portfolio_file = argv[1]
     prices_file = argv[2]
-    portfolio_report(portfolio_file=portfolio_file, prices_file=prices_file)
+    formatter = argv[3]
+    portfolio_report(portfolio_file=portfolio_file, prices_file=prices_file, formatter=formatter)
 
 
 if __name__ == '__main__':
     import sys
+
     main(sys.argv)
