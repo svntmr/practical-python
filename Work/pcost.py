@@ -12,7 +12,7 @@ def portfolio_cost(filename: str) -> float:
     portfolio = read_portfolio(filename)
     for line, stock in enumerate(portfolio):
         try:
-            total_cost += stock.cost()
+            total_cost += stock.cost
         except ValueError:
             print(f'Row {line}: Bad line: {stock}')
     return total_cost
