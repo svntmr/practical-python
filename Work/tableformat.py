@@ -62,3 +62,11 @@ def create_formatter(name: str) -> TableFormatter:
     else:
         raise RuntimeError(f'Unknown format {name}')
     return formatter
+
+
+def print_table(portfolio: list, columns: list, formatter: TableFormatter):
+    """Prints table with specified columns and formatter"""
+    formatter.headings(columns)
+    for stock in portfolio:
+        data = [str(getattr(stock, column)) for column in columns]
+        formatter.row(data)

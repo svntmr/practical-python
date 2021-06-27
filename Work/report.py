@@ -31,13 +31,13 @@ def make_report(shares: list, share_prices: dict):
     return report
 
 
-def print_report(report, tableformatter: TableFormatter):
+def print_report(report, formatter: TableFormatter):
     """Prints the report with nice formatting"""
-    tableformatter.headings(['Name', 'Shares', 'Price', 'Change'])
+    formatter.headings(['Name', 'Shares', 'Price', 'Change'])
     for name, shares, price, change in report:
         price = '${:.2f}'.format(price)  # Pre-format to add dollar sign
         data = [name, str(shares), f'{price}', f'{change:0.2f}']
-        tableformatter.row(data)
+        formatter.row(data)
 
 
 def portfolio_report(portfolio_file: str = 'Data/portfolio.csv', prices_file: str = 'Data/prices.csv',
