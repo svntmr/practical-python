@@ -2,18 +2,20 @@
 # report.py
 #
 # Exercise 2.4
+from portfolio import Portfolio
 from fileparse import parse_csv
 from stock import Stock
 from tableformat import create_formatter, TableFormatter
 
 
-def read_portfolio(filename: str) -> list:
-    """Reads portfolio into list of dictionaries"""
+def read_portfolio(filename: str) -> Portfolio:
+    """Reads portfolio into Portfolio class instance"""
     with open(filename, 'r') as portfolio_lines:
-        return [
+        portfolio = [
             Stock(stock['name'], stock['shares'], stock['price'])
             for stock in parse_csv(portfolio_lines, types=[str, int, float])
         ]
+        return Portfolio(portfolio)
 
 
 def read_prices(filename: str) -> dict:

@@ -7,15 +7,8 @@ from report import read_portfolio
 
 def portfolio_cost(filename: str) -> float:
     """Calculates the total cost of portfolio"""
-    total_cost = 0.0  # Total portfolio cost in dollars
-
     portfolio = read_portfolio(filename)
-    for line, stock in enumerate(portfolio):
-        try:
-            total_cost += stock.cost
-        except ValueError:
-            print(f'Row {line}: Bad line: {stock}')
-    return total_cost
+    return portfolio.total_cost
 
 
 def main(argv: list):
@@ -29,5 +22,5 @@ def main(argv: list):
 
 if __name__ == '__main__':
     import sys
-    main(sys.argv)
 
+    main(sys.argv)
