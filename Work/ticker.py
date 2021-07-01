@@ -21,9 +21,7 @@ def select_columns(lines, indices):
 
 
 def filter_symbols(lines, names):
-    for line in lines:
-        if line['name'] in names:
-            yield line
+    return (line for line in lines if line['name'] in names)
 
 
 def ticker(portfolio_file, follow_file, formatter):
@@ -31,7 +29,7 @@ def ticker(portfolio_file, follow_file, formatter):
     portfolio = read_portfolio(portfolio_file)
     lines = follow(follow_file)
     lines = parse_stock_data(lines)
-    lines = filter_symbols(lines, portfolio)
+    lines = (line for line in lines if line['name'] in portfolio)
     formatter.headings(['Name', 'Price', 'Change'])
     for line in lines:
         formatter.row([line['name'], f"{line['price']:0.2f}", f"{line['change']:0.2f}"])

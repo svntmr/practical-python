@@ -16,7 +16,7 @@ class Portfolio:
 
     @property
     def total_cost(self) -> float:
-        return sum([s.cost for s in self._holdings])
+        return sum(s.cost for s in self._holdings)
 
     def tabulate_shares(self):
         from collections import Counter
