@@ -2,18 +2,18 @@
 # report.py
 #
 # Exercise 2.4
-from portfolio import Portfolio
 from fileparse import parse_csv
+from portfolio import Portfolio
 from stock import Stock
 from tableformat import create_formatter, TableFormatter
 
 
-def read_portfolio(filename: str) -> Portfolio:
+def read_portfolio(filename: str, **opts) -> Portfolio:
     """Reads portfolio into Portfolio class instance"""
     with open(filename, 'r') as portfolio_lines:
         portfolio = [
             Stock(**stock)
-            for stock in parse_csv(portfolio_lines, types=[str, int, float])
+            for stock in parse_csv(portfolio_lines, types=[str, int, float], **opts)
         ]
         return Portfolio(portfolio)
 
