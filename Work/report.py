@@ -12,7 +12,7 @@ def read_portfolio(filename: str) -> Portfolio:
     """Reads portfolio into Portfolio class instance"""
     with open(filename, 'r') as portfolio_lines:
         portfolio = [
-            Stock(stock['name'], stock['shares'], stock['price'])
+            Stock(**stock)
             for stock in parse_csv(portfolio_lines, types=[str, int, float])
         ]
         return Portfolio(portfolio)
