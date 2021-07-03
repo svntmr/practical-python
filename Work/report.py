@@ -11,11 +11,7 @@ from tableformat import create_formatter, TableFormatter
 def read_portfolio(filename: str, **opts) -> Portfolio:
     """Reads portfolio into Portfolio class instance"""
     with open(filename, 'r') as portfolio_lines:
-        portfolio = [
-            Stock(**stock)
-            for stock in parse_csv(portfolio_lines, types=[str, int, float], **opts)
-        ]
-        return Portfolio(portfolio)
+        return Portfolio.from_csv(portfolio_lines)
 
 
 def read_prices(filename: str) -> dict:
