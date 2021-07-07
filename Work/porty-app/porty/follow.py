@@ -15,7 +15,7 @@ def follow(filename: str = 'Data/stocklog.csv'):
 
 
 if __name__ == '__main__':
-    from report import read_portfolio
+    from .report import read_portfolio
 
     portfolio = read_portfolio('Data/portfolio.csv')
 

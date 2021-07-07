@@ -2,10 +2,9 @@
 # report.py
 #
 # Exercise 2.4
-from fileparse import parse_csv
-from portfolio import Portfolio
-from stock import Stock
-from tableformat import create_formatter, TableFormatter
+from .fileparse import parse_csv
+from .portfolio import Portfolio
+from .tableformat import create_formatter, TableFormatter
 
 
 def read_portfolio(filename: str, **opts) -> Portfolio:

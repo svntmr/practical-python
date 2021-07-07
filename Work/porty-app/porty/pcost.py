@@ -2,7 +2,7 @@
 # pcost.py
 #
 # Exercise 1.27
-from report import read_portfolio
+from .report import read_portfolio
 
 
 def portfolio_cost(filename: str) -> float:
